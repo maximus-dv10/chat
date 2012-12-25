@@ -42,11 +42,14 @@ Chat.FE.Screens = {
 Chat.FE.MessageHandler = function (protocol){
     Rose.MessageHandler.call(this, protocol);
     
-    this.onerror = function (error){};
+    this.onerror = function (error){
+    };
     this.onopen = function (){};
     this.onnowebsocket = function (){
         $('body').html('<h1 class="no-support">There is no WebSocket support in your browser</h1>');
     };
+    
+    this.protocol.init();
 }
 
 Rose.extend(Chat.FE.MessageHandler, Rose.MessageHandler, {

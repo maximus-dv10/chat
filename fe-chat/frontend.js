@@ -1,18 +1,5 @@
 "use strict";
 
-/**
- *  0. 
- *     Connect
- *     > hello-message
- *     < accepted {index}
- *     -- render loginbox
- *     
- *     > login
- *     < ok
- *     -- change screen
- *
- */
-
 $(function (){
 
     
@@ -24,11 +11,13 @@ $(function (){
 //        $messagesList.append($message);
 //    });
 
-    // create connection
+    // INIT CHAT
     Chat.Connection = new Rose.Connection({
-        point:'ws://127.0.0.1:1337'
+        point:'ws://127.0.0.1:1337',
+        onopen: function (){
+            Chat.FE.Screens.changeScreen(Chat.FE.Screens.defaultScreen);  
+        }
     });
     
-    Chat.FE.Screens.changeScreen(Chat.FE.Screens.defaultScreen);  
     
 });

@@ -40,6 +40,8 @@ Chat.Client = (function (request){
     var _this = this;
     // get connection
     this.connection = request.accept(null, request.origin);
+    
+    this.onmessage = function (){};
     // save in pool
     this.index = -1;
     // handling incoming messages
@@ -51,12 +53,13 @@ Chat.Client = (function (request){
         }
         // handle message
         try {
-            var jmes = JSON.parse(message.data);
+            var jmes = JSON.parse(message.utf8Data);
             if(typeof(jmes.type)=='undefined'){
                 console.log('Message is not valid: ', message.data);
                 return;
             }else
             // here is message handling
+            console.log('Handling message');
             if(_this.onmessage.call(_this, jmes)!==false){
                 console.log('Message is handled successfuly');
             }

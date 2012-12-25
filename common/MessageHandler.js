@@ -16,7 +16,6 @@ Rose.MessageHandler = (function (protocol){
         _this.handle(message, this.connection);
     };
     
-    this.protocol.init();
 });
 /**
  * 
