@@ -19,6 +19,7 @@ Chat.FE.Screens = {
     defaultScreen: 'Loginbox',
     Templates : new TemplateStorage({
         message: '/chat/fe-chat/templates/message.tpl',
+        user: '/chat/fe-chat/templates/user.tpl',
         loginbox: '/chat/fe-chat/templates/loginbox.tpl',
         content: '/chat/fe-chat/templates/content.tpl'
     }),
@@ -42,9 +43,10 @@ Chat.FE.Screens = {
 Chat.FE.MessageHandler = function (protocol){
     Rose.MessageHandler.call(this, protocol);
     
-    this.onerror = function (error){
-    };
     this.onopen = function (){};
+    this.onerror = function (error){
+        $('body').html('<h1 class="error">Error!</h1>');
+    };
     this.onnowebsocket = function (){
         $('body').html('<h1 class="no-support">There is no WebSocket support in your browser</h1>');
     };

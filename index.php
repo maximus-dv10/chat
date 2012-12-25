@@ -19,6 +19,7 @@
         <script src="common/underscore-min.js"></script>
         <!-- Rose Lib -->
         <script src="common/TemplateStorage.js"></script>
+        <script src="fe-chat/nodejsEmulate.js"></script>
         <script src="common/Rose.js"></script>
         <!-- Chat Lib -->
         <script src="common/MessageHandler.js"></script>

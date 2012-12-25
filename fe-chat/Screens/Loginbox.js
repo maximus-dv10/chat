@@ -15,7 +15,7 @@ Chat.FE.Screens.Loginbox.prototype = {
         // apply DOM events               
         this.$loginbox.on('click','button', function (){
             Chat.Connection.sendMessage({
-                type:'login',
+                type:'Login',
                 username: this.$loginbox.find('input[name="username"]').val(),
                 color: this.$loginbox.find('input[name="username"]').val()
             });

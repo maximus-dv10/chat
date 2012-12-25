@@ -27,3 +27,5 @@ Array.prototype.each = function (callback, context){
             if(callback.call(context, this[i], i ) === false)break;
     }
 }
+
+module.exports = Rose;

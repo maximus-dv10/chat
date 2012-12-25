@@ -2,14 +2,6 @@
 
 $(function (){
 
-    
-//    // new text message
-//    $('body').on('chat.incoming.text', function (e, data){
-//        var $message = $(Chat.FE.Templates.render('message', {
-//                            message: data
-//                       }));
-//        $messagesList.append($message);
-//    });
 
     // INIT CHAT
     Chat.Connection = new Rose.Connection({
