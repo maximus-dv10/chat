@@ -4,7 +4,9 @@
 if(!Rose){
     var Rose = require('../common/Rose.js');
 }
-
+if(!_){
+    var _ = require('../common/underscore-min.js');
+}
 Rose.MessageHandler = (function (protocol){
     var _this = this;
     

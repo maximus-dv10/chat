@@ -109,6 +109,7 @@ Chat.Client = (function (request, pool){
     
     this.pool = pool;
     this.handler = false;
+    this.setProtocol(GuestProtocol);
     // default profile
     this.profile = {
         id:0,
@@ -152,11 +153,10 @@ Chat.Client = (function (request, pool){
         }
         
     });
-    this.setProtocol(GuestProtocol);
 });
 Chat.Client.prototype = {
     setProtocol: function (protocol){
-        this.handler = protocol;
+        this.handler = new Rose.MessageHandler(protocol);
     },
     setID : function (id){
         this.profile.id = id;
