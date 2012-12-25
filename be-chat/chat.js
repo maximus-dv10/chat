@@ -37,50 +37,34 @@ Chat.ClientsPool.prototype = {
 
 
 Chat.Client = (function (request){
-    
+    var _this = this;
     // get connection
     this.connection = request.accept(null, request.origin);
     // save in pool
     this.index = -1;
-    //
+    // handling incoming messages
     this.connection.on('message', function(message) {
-        if (message.type === 'utf8') { // accept only text
-            if (userName === false) { // first message sent by user is their name
-                // remember user name
-                userName = htmlEntities(message.utf8Data);
-                // get random color and send it back to the user
-                userColor = colors.shift();
-                connection.sendUTF(JSON.stringify({
-                    type:'color', 
-                    data: userColor
-                }));
-                console.log((new Date()) + ' User is known as: ' + userName
-                    + ' with ' + userColor + ' color.');
-
-            } else { // log and broadcast the message
-                console.log((new Date()) + ' Received Message from '
-                    + userName + ': ' + message.utf8Data);
-                
-                // we want to keep history of all sent messages
-                var obj = {
-                    time: (new Date()).getTime(),
-                    text: htmlEntities(message.utf8Data),
-                    author: userName,
-                    color: userColor
-                };
-                history.push(obj);
-                history = history.slice(-100);
-
-                // broadcast message to all connected clients
-                var json = JSON.stringify({
-                    type:'message', 
-                    data: obj
-                });
-                for (var i=0; i < clients.length; i++) {
-                    clients[i].sendUTF(json);
-                }
-            }
+        console.log((new Date()) + ' message ', message);
+        // only UTF-8 messages
+        if(message.type != 'utf8'){
+            return;
         }
+        // handle message
+        try {
+            var jmes = JSON.parse(message.data);
+            if(typeof(jmes.type)=='undefined'){
+                console.log('Message is not valid: ', message.data);
+                return;
+            }else
+            // here is message handling
+            if(_this.onmessage.call(_this, jmes)!==false){
+                console.log('Message is handled successfuly');
+            }
+        } catch (e) {
+            console.log('Message is not valid: ', message.data);
+            return;
+        }
+        
     });
     
 });

@@ -14,16 +14,20 @@
                      margin-top:10px; padding:5px; width:400px;  }
             #status { width:88px; display:block; float:left; margin-top:15px; }
         </style>
-        
+        <!-- Common Libs -->
         <script src="common/jquery-1.8.2.min.js"></script>
         <script src="common/underscore-min.js"></script>
+        <!-- Rose Lib -->
         <script src="common/TemplateStorage.js"></script>
         <script src="common/Rose.js"></script>
+        <!-- Chat Lib -->
         <script src="common/MessageHandler.js"></script>
-        <script src="common/Protocol.js"></script>
-        <script src="fe-chat/frontend-connection.js"></script>
+        <script src="fe-chat/Connection.js"></script>
+        <script src="fe-chat/Chat.js"></script>
+        <script src="fe-chat/Screens/Loginbox.js"></script>
+        <script src="fe-chat/frontend.js"></script>
     </head>
     <body>
-        
+        Initializing...
     </body>
 </html>
