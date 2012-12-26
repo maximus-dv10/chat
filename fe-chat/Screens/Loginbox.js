@@ -8,7 +8,7 @@ Chat.FE.Screens.Loginbox = (function (){
 
 Chat.FE.Screens.Loginbox.prototype = {
     initLayout : function (){
-        
+        var _this = this;
         // render template
         this.$loginbox = $(Chat.FE.Screens.Templates.render('loginbox', {}));
         
@@ -16,8 +16,8 @@ Chat.FE.Screens.Loginbox.prototype = {
         this.$loginbox.on('click','button', function (){
             Chat.Connection.sendMessage({
                 type:'Login',
-                username: this.$loginbox.find('input[name="username"]').val(),
-                color: this.$loginbox.find('input[name="username"]').val()
+                username: _this.$loginbox.find('input[name="username"]').val(),
+                color: _this.$loginbox.find('input[name="username"]').val()
             });
         });
         // 

@@ -43,20 +43,21 @@ Rose.Connection = (function (params){
         that.onerror.call(that, error);
     };
     this.connection.onmessage = function (message) {
-        try {
-            var jmes = JSON.parse(message.data);
-            if(typeof(jmes.type)=='undefined'){
-                console.log('Message is not valid: ', message.data);
-                return;
-            }else
-            // here is message handling
-            if(that.onmessage.call(that, jmes)!==false){
-                console.log('Message is handled successfuly');
-            }
-        } catch (e) {
+        //        try {
+        var jmes = JSON.parse(message.data);
+        if(typeof(jmes.type)=='undefined'){
             console.log('Message is not valid: ', message.data);
             return;
+        }else{
+            // here is message handling
+            console.log('Incoming mes:', jmes.type);
+            if(that.onmessage.call(that, jmes)!==false){
+            }
         }
+    //        } catch (e) {
+    //            console.log('Message is not valid: ', message.data);
+    //            return;
+    //        }
     };
     
     // default connection for messages

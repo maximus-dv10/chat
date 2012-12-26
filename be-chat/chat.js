@@ -36,13 +36,14 @@ Chat.ClientsPool.prototype = {
     broadcast: function (message, noneId){
         var D = new Date();
         message.date = D;
-        for(var i in this.clients){
-            var c = this.clients[i];
-            
+        
+        this.clients.each(function (c){
+            if(! c instanceof Chat.Client) {return;}
             if(c.profile.id != noneId){
                 c.connection.sendMessage(message);
             }
-        }
+        });
+        
     },
     get: function (){
         
@@ -54,9 +55,8 @@ Chat.ClientsPool.prototype = {
         var client = this.clients.splice(index, 1);
         this.broadcast({
                     type:'LeftUser',
-                    user: client.profile,
-                    date: D
-                }, client.profile.id);
+                    user: client.profile
+                });
     }
 };
 
@@ -76,7 +76,6 @@ var GuestProtocol = _.extend(Rose.DefaultProtocol , {
         this.pool.broadcast({
                     type:'NewUser',
                     user: this.profile,
-                    date: D
                 }, this.profile.id);
                 
         this.setProtocol(RoomProtocol);         
@@ -94,12 +93,14 @@ var RoomProtocol = _.extend(Rose.DefaultProtocol , {
         
         return {
             type:'Wellcome',
-            history: History.get(),
+            history: this.pool.history.get(),
             users: []
         };
     },
     onText: function (message){
-        this.broadcast(message, this.profile.id);
+        message.author = this.profile;
+        this.pool.history.add(message);
+        this.pool.broadcast(message, this.profile.id);
     }
     
 });
@@ -134,7 +135,7 @@ Chat.Client = (function (request, pool){
             return;
         }
         // handle message
-        try {
+//        try {
             var jmes = JSON.parse(message.utf8Data);
             
             console.log(typeof(jmes.type));
@@ -145,12 +146,12 @@ Chat.Client = (function (request, pool){
             }else
             // here is message handling
             if(_this.handler.onmessage.call(_this, jmes)!==false){
-                console.log('Message is handled successfuly');
+                
             }
-        } catch (e) {
-            console.log('Message is not valid: ', e);
-            return;
-        }
+//        } catch (e) {
+//            console.log('Message is not valid: ', e);
+//            return;
+//        }
         
     });
 });

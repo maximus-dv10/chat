@@ -1,3 +1,6 @@
+if(!_){
+    var _ = require('../common/underscore-min.js');
+}
 var Rose = {};
 
 Rose.callIf = function (obj, func, context,args){

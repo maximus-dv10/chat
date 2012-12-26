@@ -26,6 +26,7 @@
         <script src="fe-chat/Connection.js"></script>
         <script src="fe-chat/Chat.js"></script>
         <script src="fe-chat/Screens/Loginbox.js"></script>
+        <script src="fe-chat/Screens/Room.js"></script>
         <script src="fe-chat/frontend.js"></script>
     </head>
     <body>

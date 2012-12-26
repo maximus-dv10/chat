@@ -40,7 +40,7 @@ Chat.FE.Screens.Room.prototype = {
         $('body').append(this.$content);
     }, 
     addMessage: function (data){
-        var $message = $(Chat.FE.Templates.render('message', {
+        var $message = $(Chat.FE.Screens.Templates.render('message', {
                             message: data
                        }));
         this.$list.append($message);
