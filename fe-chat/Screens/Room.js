@@ -9,7 +9,8 @@ Chat.FE.Screens.Room = (function (){
     this.mid = 0;
     this.user = {
         id:'self',
-        username:'ME'
+        username:'ME',
+        color:''
     };
     this.initLayout();
 });

@@ -20,6 +20,7 @@ Chat.ClientsPool = (function (){
     this.clients = [];
     // increment of connection id
     this.ids = 1;
+    this.mids = 1;
     this.history = new Chat.History();
 });
 Chat.ClientsPool.prototype = {
@@ -29,13 +30,14 @@ Chat.ClientsPool.prototype = {
         client.setID(this.ids++);
         var that = this;
         client.connection.on('close', function(connection) {
-            that.remove(client.index);
+            that.remove(client.profile.id);
         });
         return client;
     },
     broadcast: function (message, noneId){
         var D = new Date();
         message.date = D;
+        message.id = this.mids++;
         
         this.clients.each(function (c){
             if(! c instanceof Chat.Client) {return;}
@@ -46,16 +48,30 @@ Chat.ClientsPool.prototype = {
         
     },
     get: function (){
-        
+        var users = [];
+        this.clients.each(function (c){
+            users.push(c.profile);
+        });
+        return users;
     },
     add: function (client){
         return this.clients.push(client)-1;
     },
-    remove: function (index){
-        var client = this.clients.splice(index, 1);
+    remove: function (ID){
+        
+        var client = false;
+        var _this = this;
+        this.clients.each(function (c, index){
+            if(c.profile.id == ID){
+                client = _this.clients.splice(index, 1);
+                return false;
+            }
+        });
+        
         this.broadcast({
                     type:'LeftUser',
-                    user: client.profile
+                    user: client.profile,
+                    user_id: ID
                 });
     }
 };
@@ -75,7 +91,7 @@ var GuestProtocol = _.extend(Rose.DefaultProtocol , {
         // broadcast event
         this.pool.broadcast({
                     type:'NewUser',
-                    user: this.profile,
+                    user: this.profile
                 }, this.profile.id);
                 
         this.setProtocol(RoomProtocol);         
@@ -94,7 +110,7 @@ var RoomProtocol = _.extend(Rose.DefaultProtocol , {
         return {
             type:'Wellcome',
             history: this.pool.history.get(),
-            users: []
+            users: this.pool.get()
         };
     },
     onText: function (message){

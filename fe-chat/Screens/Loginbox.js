@@ -17,8 +17,9 @@ Chat.FE.Screens.Loginbox.prototype = {
             Chat.Connection.sendMessage({
                 type:'Login',
                 username: _this.$loginbox.find('input[name="username"]').val(),
-                color: _this.$loginbox.find('input[name="username"]').val()
+                color: _this.$loginbox.find('select[name="color"] option:selected').attr('value')
             });
+            return false;
         });
         // 
         $('body').append(this.$loginbox);
